@@ -53,17 +53,14 @@ function main() {
 
 class Solution{
     missingNumber(array,n){
-        const tempArray = [];
-        tempArray.length = n;
-        for (let i=0; i< n; i++){
-            const val = array[i];
-            tempArray[val-1]=val;
+        // use series sum formula to get the sum of integers from 1 to n
+        // then subtract elements of the array to find the remaining value
+        // time O(n), space O(1)
+        const seriesSum = (n * (n + 1))/2;
+        let remainder = seriesSum;
+        for (const num of array){
+            remainder-=num;
         }
-        for (let i=0; i<n; i++){
-            const val = tempArray[i];
-            if (!val && val!==0){
-                return i+1;
-            }
-        }
+        return remainder;
     }
 }

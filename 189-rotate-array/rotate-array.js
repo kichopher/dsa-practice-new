@@ -9,12 +9,11 @@ var rotate = function (nums, k) {
     // 2. Reverse the first k elements
     // 3. Reverse the remaining elements
     function reverseArrayRange(arr, startIx, endIx) {
-        const rangeLength = endIx - startIx + 1;
-        const numberOfMovesRequired = Math.trunc(rangeLength/2);
-        for (let i = 0; i < numberOfMovesRequired; i++) {
-            const temp = arr[startIx + i];
-            arr[startIx + i] = arr[endIx - i];
-            arr[endIx - i] = temp;
+        while (startIx < endIx){
+            const temp = arr[endIx];
+            arr[endIx] = arr[startIx];
+            arr[startIx] = temp;
+            startIx++; endIx--;
         }
     }
     const kActual = k % nums.length; // this corrects for when k >= nums.length

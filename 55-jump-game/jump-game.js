@@ -3,16 +3,10 @@
  * @return {boolean}
  */
 var canJump = function (nums) {
-    if (nums.length === 1) return true;
-    // Approach: traverse the array from last index to find the nearest index towards the start to reach it from
-    let indexToReach = nums.length - 1;
-    for (let i = nums.length - 2; i >= 0; i--) {
-        const jumpsRequired = indexToReach - i;
-        if (nums[i] >= jumpsRequired) {
-            // jump is possible from current index
-            // now update indexToReach to current index and try to find if reaching this index is possible in the subsequent interations
-            indexToReach = i;
-        }
+    let farthest = 0;
+    for (let i = 0; i < nums.length - 1; i++) { /** Skip checking the last index, since no jump can be made from there */
+        farthest = Math.max(farthest, i + nums[i]);
+        if (nums[i] === 0 && i === farthest) break;
     }
-    return indexToReach === 0 ? true : false;
+    return farthest < nums.length - 1 ? false : true;
 };

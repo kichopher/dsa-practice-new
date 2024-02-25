@@ -15,8 +15,8 @@ var canCompleteCircuit = function (gas, cost) {
         totalCost += cost[i];
         tankBal += gas[i] - cost[i];
         if (tankBal < 0) {
-            tankBal = 0;
             startIndex = i + 1;
+            tankBal = 0;
         }
     }
     return totalCost > totalGas ? -1 : startIndex;

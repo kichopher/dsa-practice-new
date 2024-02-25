@@ -3,7 +3,7 @@
  * @return {number}
  */
 var hIndex = function (citations) {
-    /** Approach 2: citations-Count-Map
+    /** Approach 2: citations-Count-Map | O(n) time and O(n) space
      1) Create an array papers of size n + 1 to count the number of papers with citation i.
      2) If a paper has more than n citations, we count it as n.
      3) Iterate from n to 0 and keep a running sum total. The first i where total >= i is the h-index.

@@ -3,21 +3,19 @@
  * @return {string}
  */
 var longestCommonPrefix = function (strs) {
-    let commonPrefix = strs[0];
-    for (let i = 0; i < strs.length; i++) {
-        // find common prefix index
-        let commonPrefixIndex = -1;
-        const currentStr = strs[i]
-        for (let j = 0; j < Math.min(currentStr.length, commonPrefix.length); j++) {
-            if (commonPrefix[j]!== currentStr[j]){
-                break;
-            }
-            else {
-                commonPrefixIndex++; 
+    // Optimal solution: Vertical scanning O(n*m) time and O(1) space
+    let commonPrefix = "";
+    let indexToCheck = 0;
+    while (strs.length >= 1 && strs[0].length >= indexToCheck + 1) {
+        const currentCharToCheck = strs[0][indexToCheck]
+        for (let i = 0; i < strs.length; i++) {
+            if (strs[i][indexToCheck] !== currentCharToCheck) {
+                return commonPrefix;
             }
         }
-        commonPrefix = commonPrefixIndex >= 0? commonPrefix.substring(0, commonPrefixIndex + 1) : "";
-        if (commonPrefix.length === 0) return commonPrefix;
+        // control reaches here if currentIndex matches all strs
+        commonPrefix += currentCharToCheck
+        indexToCheck++
     }
     return commonPrefix;
 };

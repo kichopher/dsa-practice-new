@@ -8,15 +8,9 @@ var reverseWords = function (s) {
         // reverse the array
         // traverse this array to find each word(non-empty word after trimming). and upon find it, concat it with the result after a space.
     */
-    const reversedWordsArray = s.split(" ").reverse();
-    reversedWordsArray.forEach((word, index) => {
-        reversedWordsArray[index] = word.trim();
-    })
-    let result = "";
-    reversedWordsArray.forEach(word => {
-        if (word.length > 0) {
-            result += result.length === 0 ? word : ` ${word}`;
-        }
-    })
-    return result;
+    return s.split(/\s+/)
+            .filter(Boolean)
+            .reverse()
+            .join(" ")
+            .trim();
 };

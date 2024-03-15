@@ -11,7 +11,6 @@ var convert = function (s, numRows) {
     let isZig = true; // when isZig is true traverse South. when isZig is false, traverse North-West
     for (const char of s) {
         rows[i] += char;
-        // rows[i][j] = char;
 
         // determine next position based on zig/zag
         if (i === 0) { isZig = true }
@@ -21,10 +20,8 @@ var convert = function (s, numRows) {
             i++;
         } else {
             i--;
-            // j++;
         }
     }
     /** Now combine */
-    console.log(rows)
-    return rows.filter(Boolean).join("");
+    return rows.join("");
 }

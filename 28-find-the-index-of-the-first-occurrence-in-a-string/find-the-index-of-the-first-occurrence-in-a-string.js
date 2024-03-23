@@ -19,16 +19,15 @@ var strStr = function (haystack, needle) {
             const hp = haystack_start_index + i
             if (i === 0 && needle[i] === haystack[hp]) return haystack_start_index;
             if (needle[i] !== haystack[hp]) {
-                /** determine the new haystack_start_index */
+                /** determine the new haystack_start_index and break out of the inner for-loop */
                 if (last.hasOwnProperty(haystack[hp])) {
                     const lastNeedleCharIndex = last[haystack[hp]];
                     const moves = i - lastNeedleCharIndex
                     haystack_start_index += Math.max(1, moves);
-                    break;
+                } else { /** else skip till past current haystack-pointer (hp) */
+                    haystack_start_index = hp + 1;
                 }
-                /** else skip till past this index */
-                haystack_start_index = hp + 1;
-                break;
+                break; // break out of the inner for-loop
             }
         }
     }

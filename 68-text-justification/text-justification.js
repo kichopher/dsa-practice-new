@@ -27,14 +27,15 @@ var fullJustify = function (words, maxWidth) {
             return (line + getSpaceStringGivenCount(maxWidth - line.length))
         }
         /** distribute spaces in gaps evenly */
-        const spacesToInsert = maxWidth - (line.length - gaps);
-        let totalUnevenSpaceCount = spacesToInsert % gaps;
+        let spacesToInsert = maxWidth - (line.length - gaps);
+        let unevenSpacesToInsert = spacesToInsert % gaps;
         const evenSpaceLength = Math.trunc(spacesToInsert / gaps);
         let newLine = "";
         lineWords.forEach((word, index) => {
-            const unevenSpaceCountToUse = totalUnevenSpaceCount > 0 ? 1 : 0;
-            if (unevenSpaceCountToUse) totalUnevenSpaceCount--;
-            const spacesToSuffix = index === lineWords.length - 1 ? 0 : evenSpaceLength + unevenSpaceCountToUse;
+            const unevenSpaceCountToUse = unevenSpacesToInsert > 0 ? 1 : 0;
+            unevenSpacesToInsert -= unevenSpaceCountToUse;
+            const spacesToSuffix = spacesToInsert ? evenSpaceLength + unevenSpaceCountToUse : 0;
+            spacesToInsert -= spacesToSuffix;
             newLine += word + getSpaceStringGivenCount(spacesToSuffix);
         })
         return newLine;

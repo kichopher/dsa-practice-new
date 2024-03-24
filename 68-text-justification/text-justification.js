@@ -23,21 +23,19 @@ var fullJustify = function (words, maxWidth) {
     const fullJustifiedLines = lines.map((line, index) => {
         const lineWords = line.split(" ");
         const gaps = lineWords.length - 1;
-        const maxWidthDiff = maxWidth - line.length;
         if (index === lines.length - 1 || gaps === 0) {
-            return (line + getSpaceStringGivenCount(maxWidthDiff))
+            return (line + getSpaceStringGivenCount(maxWidth - line.length))
         }
         /** distribute spaces in gaps evenly */
         const spacesToInsert = maxWidth - (line.length - gaps);
-        let unevenSpaceCount = spacesToInsert % gaps;
+        let totalUnevenSpaceCount = spacesToInsert % gaps;
         const evenSpaceLength = Math.trunc(spacesToInsert / gaps);
-        console.log({spacesToInsert, gaps, unevenSpaceCount, evenSpaceLength})
         let newLine = "";
         lineWords.forEach((word, index) => {
-            const extraSpaceRequired = unevenSpaceCount > 0;
-            if (extraSpaceRequired) unevenSpaceCount--;
-            const spacesToSuffix = extraSpaceRequired ? evenSpaceLength + 1 : evenSpaceLength;
-            newLine += word + (index === lineWords.length - 1 ? "" : getSpaceStringGivenCount(spacesToSuffix))
+            const unevenSpaceCountToUse = totalUnevenSpaceCount > 0 ? 1 : 0;
+            if (unevenSpaceCountToUse) totalUnevenSpaceCount--;
+            const spacesToSuffix = index === lineWords.length - 1 ? 0 : evenSpaceLength + unevenSpaceCountToUse;
+            newLine += word + getSpaceStringGivenCount(spacesToSuffix);
         })
         return newLine;
     })

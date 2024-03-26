@@ -3,7 +3,8 @@
  * @return {number[][]}
  */
 var threeSum = function (nums) {
-    /** With sorting 
+    /** With sorting
+    time - O(n^2), space - O(n)
     https://leetcode.com/problems/3sum/solutions/281302/javascript-with-lots-of-explanatory-comments
     */
 

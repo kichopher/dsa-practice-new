@@ -7,27 +7,24 @@ var threeSum = function (nums) {
     time - O(n^2), space - O(n)
     https://leetcode.com/problems/3sum/solutions/281302/javascript-with-lots-of-explanatory-comments
     */
-
-    let sortedNums = [...nums].sort((a, b) => a - b);
-    const results = []
+    const results = [];
     const target = 0;
+    nums.sort((a, b) => a - b); // sort array
     let i = 0;
-    while (i < sortedNums.length - 2 && sortedNums[i] <= target) {
-        while (i > 0 && sortedNums[i - 1] === sortedNums[i]) i++;
+    while (i < nums.length - 2) {
+        while (i > 0 && nums[i] === nums[i - 1]) i++;
         let j = i + 1;
-        let k = sortedNums.length - 1;
+        let k = nums.length - 1;
         while (j < k) {
-            const sum = sortedNums[i] + sortedNums[j] + sortedNums[k]
+            const sum = nums[i] + nums[j] + nums[k];
             if (sum === target) {
-                results.push([sortedNums[i], sortedNums[j], sortedNums[k]])
-                while (sortedNums[j] === sortedNums[j + 1]) j++;
-                while (sortedNums[k] === sortedNums[k - 1]) k--;
+                results.push([nums[i], nums[j], nums[k]]);
+                while (nums[j + 1] === nums[j]) j++;
+                while (nums[k - 1] === nums[k]) k--;
                 j++; k--;
-            } else if (sum < target) {
-                j++;
-            } else if (sum > target) {
-                k--;
-            }
+            } 
+            else if (sum < target) j++
+            else if (sum > target) k--
         }
         i++;
     }

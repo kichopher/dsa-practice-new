@@ -5,11 +5,9 @@
 var getConcatenation = function (nums) {
     const ans = [];
     const n = nums.length;
-    for (i = 0; i < 2 * n; i++) {
-        if (i < n) {
+    for (k = 0; k < 2; k++) {
+        for (i = 0; i < n; i++) {
             ans.push(nums[i]);
-        } else {
-            ans.push(nums[i - n]);
         }
     }
     return ans;

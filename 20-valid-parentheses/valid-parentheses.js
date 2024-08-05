@@ -3,21 +3,20 @@
  * @return {boolean}
  */
 var isValid = function (s) {
-    const setOfClosingBraces = new Set([")", "}", "]"]);
-    const mapOfOpeningBracesToTheirClosingBraces = new Map();
-    mapOfOpeningBracesToTheirClosingBraces.set("(", ")");
-    mapOfOpeningBracesToTheirClosingBraces.set("{", "}");
-    mapOfOpeningBracesToTheirClosingBraces.set("[", "]");
+    const openToClose = new Map();
+    openToClose.set("(", ")");
+    openToClose.set("{", "}");
+    openToClose.set("[", "]");
     const stackOfOpeningBraces = [];
     for (i = 0; i < s.length; i++) {
         const char = s[i];
-        if (mapOfOpeningBracesToTheirClosingBraces.has(char)) {
+        if (openToClose.has(char)) {
             // is opening bracket
             stackOfOpeningBraces.push(char)
         } else {
             // is closing bracket (find pair in stack)
             const poppedOpeningBracket = stackOfOpeningBraces.pop();
-            if (mapOfOpeningBracesToTheirClosingBraces.get(poppedOpeningBracket) === char) {
+            if (openToClose.get(poppedOpeningBracket) === char) {
                 continue;
             } else { return false; }
         }

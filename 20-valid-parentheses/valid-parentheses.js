@@ -11,7 +11,6 @@ var isValid = function (s) {
     const stackOfOpeningBraces = [];
     for (i = 0; i < s.length; i++) {
         const char = s[i];
-        console.log(char)
         if (mapOfOpeningBracesToTheirClosingBraces.has(char)) {
             // is opening bracket
             stackOfOpeningBraces.push(char)
@@ -23,6 +22,5 @@ var isValid = function (s) {
             } else { return false; }
         }
     }
-    console.log(stackOfOpeningBraces)
     return stackOfOpeningBraces.length ? false : true;
 };

@@ -4,19 +4,20 @@
  * @return {number[]}
  */
 var topKFrequent = function (nums, k) {
-    const numCounter = new Map();
+    const numFreq = new Map();
     nums.forEach(num => {
-        if (numCounter.has(num)) {
-            numCounter.set(num, numCounter.get(num) + 1)
-        } else {
-            numCounter.set(num, 1)
-        }
+        numFreq.set(num, (numFreq.get(num) ?? 0) + 1);
     })
-    const numCountEntries = [...numCounter.entries()]
-    numCountEntries.sort((a, b) => b[1] - a[1]); // sort in decreasing order of numCount O(nlogn)
-    const ans = [];
-    for (let i = 0; i < Math.min(k, numCountEntries.length); i++) {
-        ans.push(numCountEntries[i][0])
+    const freqGroupedNums = []; // index is the frequency
+    for (let i = 0; i < nums.length + 1; i++) {
+        freqGroupedNums.push([]);
     }
-    return ans;
+    [...numFreq.entries()].forEach(([num, freq]) => {
+        freqGroupedNums[freq].push(num);
+    })
+    const uniqueNumsSortedByAscendingFreq = [];
+    freqGroupedNums.forEach(group => {
+        uniqueNumsSortedByAscendingFreq.push(...group);
+    })
+    return uniqueNumsSortedByAscendingFreq.slice(-k);
 };

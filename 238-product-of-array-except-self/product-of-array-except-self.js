@@ -3,20 +3,21 @@
  * @return {number[]}
  */
 var productExceptSelf = function (nums) {
-    const n = nums.length;
-    const answer = new Array(n);
-    // answer[i] initially is set to the product of every number to the left of i
-    answer[0] = 1;
-    for (let i = 1; i < n; i++) {
-        answer[i] = answer[i - 1] * nums[i - 1];
-    }
-    // at this point answer[n-1] will be the correct value
+    // O(n) time and O(n) memory solution: Calculate prefix array and postfix array and then multiply
+    const prefixes = new Array(nums.length).fill(1); // set default value 1 (1*any = any)
+    const postfixes = new Array(nums.length).fill(1);
 
-    // R is the product of every number to the right of i
-    let R = 1;
-    for (let i = n - 2; i >= 0; i--) {
-        R *= nums[i + 1];
-        answer[i] *= R;
+    // calculate prefix for each index (no prefix for index 0):
+    for (let i = 1; i < nums.length; i++) {
+        prefixes[i] = prefixes[i - 1] * nums[i - 1];
     }
-    return answer;
+
+    // calculate postfix for each index (no postfix for last index):
+    for (let i = nums.length - 2; i >= 0; i--) {
+        postfixes[i] = postfixes[i + 1] * nums[i + 1];
+    }
+
+    const result = [];
+    prefixes.forEach((prefix, i) => { result.push(prefix * postfixes[i]) });
+    return result;
 };

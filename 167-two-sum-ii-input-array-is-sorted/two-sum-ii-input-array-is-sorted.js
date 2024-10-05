@@ -3,23 +3,14 @@
  * @param {number} target
  * @return {number[]}
  */
-var twoSum = function(numbers, target) {
-    /** Have two pointers one at start and one at the end
-    calculate the sum and take a step based on the sum
-    if sum is equal to target, return the result
-    if sum is less than target, move left pointer one-step to right
-    if sum is greater than target, move right pointer one-step to the left */
-    let sp = 0;
-    let ep = numbers.length- 1;
-    while (sp < ep){
-        const currentSum = numbers[sp] + numbers [ep];
-        if (currentSum === target){
-            return [sp+1, ep+1];
-        }else if (currentSum < target){
-            sp++; continue;
-        }else {
-            /** currentSum > target */
-            ep--; continue;
-        }
+var twoSum = function (numbers, target) {
+    let [l, r] = [0, numbers.length - 1];
+    // there will be exactly one solution, hence skipping edge cases.
+    while (l < r) {
+        const sum = numbers[l] + numbers[r];
+        if (sum === target) return [l + 1, r + 1];
+        else if (sum < target) { l++; }
+        else { r--; }
     }
+    // control wouldn't reach here. Time O(n), space O(1)
 };

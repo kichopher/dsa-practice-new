@@ -9,7 +9,7 @@ var generateParenthesis = function (n) {
             result.push(sequence)
         } else {
             // add open-brace
-            if (openN >= closedN && openN < n) {
+            if (openN < n) {
                 growSequence(openN + 1, closedN, sequence + "(")
             }
             // add closed-brace

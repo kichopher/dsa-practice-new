@@ -5,22 +5,22 @@
  * @return {number}
  */
 var carFleet = function (target, position, speed) {
-    /** Time: O(nlogn) for sorting. Space: O(n) */
-    const positionSpeedTuples = position.map((pos, index) => [pos, speed[index]]);
-    // sort positionSpeedTuples in descending order of position
-    positionSpeedTuples.sort((a, b) => (b[0] - a[0]));
+    if (position.length === 0) return 0;
     
-    const fleetsStack = [];
-    const getTimeToReachTarget = ([pos, sp]) => (target - pos) / sp
-    positionSpeedTuples.forEach(tuple => {
-        if (fleetsStack.length === 0) {
-            fleetsStack.push(tuple); return;
+    const positionSpeeds = position.map((pos, i) => ([pos, speed[i]]))
+    positionSpeeds.sort((a, b) => a[0] - b[0]); // increasing order of positions
+
+    let lastFleet = positionSpeeds.pop();
+    let fleetCount = 1;
+
+    while (positionSpeeds.length) {
+        const currentCar = positionSpeeds.pop();
+        const getTimeToTarget = ([pos, sp]) => ((target - pos) / sp);
+        if (getTimeToTarget(currentCar) > getTimeToTarget(lastFleet)) {
+            lastFleet = currentCar;
+            fleetCount += 1;
         }
-        // else insert tuple only if current tuple reaches target after top of stack
-        const topOfStack = fleetsStack[fleetsStack.length - 1]
-        if (getTimeToReachTarget(tuple) > getTimeToReachTarget(topOfStack)) {
-            fleetsStack.push(tuple)
-        }
-    })
-    return fleetsStack.length;
+    }
+
+    return fleetCount;
 };

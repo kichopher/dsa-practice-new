@@ -4,33 +4,20 @@
  */
 var largestRectangleArea = function (heights) {
     let maxArea = 0;
-    const stack = []; // stores tuples that mentions the height and its beginning index [h, i]
+    const stack = []; // stack of tuples of height and start-index [h, si]
     heights.forEach((height, index) => {
-        if (stack.length === 0) {
-            stack.push([height, 0]);
-            return;
+        let startIndex = index;
+        while (stack.length && stack[stack.length - 1][0] > height) {
+            const [stackTopHeight, stackTopIndex] = stack.pop();
+            maxArea = Math.max(maxArea, (index - stackTopIndex) * stackTopHeight);
+            startIndex = stackTopIndex
         }
-        const getStackTop = () => stack[stack.length - 1]
-        if (getStackTop()[0] > height) {
-            let poppedStackTopIndex;
-            while (stack.length && getStackTop()[0] > height) {
-                // pop & calculate area
-                const [stackTopHeight, stackTopIndex] = stack.pop();
-                poppedStackTopIndex = stackTopIndex;
-                const currArea = (index - stackTopIndex) * stackTopHeight
-                maxArea = Math.max(maxArea, currArea)
-            }
-            stack.push([height, stack.length === 0 ? 0 : poppedStackTopIndex])
-        } else {
-            stack.push([height, index])
-        }
+        stack.push([height, startIndex]);
     })
 
-    while (stack.length){
+    while (stack.length) {
         const [stackTopHeight, stackTopIndex] = stack.pop();
-        const currArea = (heights.length - stackTopIndex) * stackTopHeight;
-        maxArea = Math.max(maxArea, currArea)
+        maxArea = Math.max(maxArea, (heights.length - stackTopIndex) * stackTopHeight)
     }
-
     return maxArea;
 };

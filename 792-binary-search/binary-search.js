@@ -6,15 +6,13 @@
 var search = function (nums, target) {
     let [l, r] = [0, nums.length - 1]
     while (l <= r) {
-        const mid = Math.floor(((l + r) / 2))
-        if (nums[mid] === target) return mid;
-        if (nums[mid] > target) {
-            r = mid - 1;
+        const i = Math.floor((l + r) / 2)
+        if (nums[i] === target) return i;
+        if (target < nums[i]) {
+            r = i - 1;
         } else {
-            l = mid + 1;
+            l = i + 1;
         }
     }
-
-    // if control reaches here, target not found.
     return -1;
 };

@@ -11,7 +11,7 @@ var findMin = function (nums) {
             minNum = Math.min(minNum, nums[l])
             l = i + 1;
         } else {
-            minNum = Math.min(minNum, nums[i], nums[r])
+            minNum = Math.min(minNum, nums[i])
             r = r - 1;
         }
     }

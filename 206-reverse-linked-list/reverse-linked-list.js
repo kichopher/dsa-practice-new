@@ -10,11 +10,8 @@
  * @return {ListNode}
  */
 var reverseList = function (head) {
-    if (!head || !head.next) return head;
-    // control reaches here if there is atleast 2 nodes
-    let prev = head;
-    let curr = head.next;
-    prev.next = null;
+    let prev = null;
+    let curr = head;
     while (curr) {
         const next = curr.next;
         curr.next = prev;

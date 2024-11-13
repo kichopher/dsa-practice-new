@@ -3,14 +3,18 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
-    // O(n) time and O(n) space
-    const maxToRightOfIx = new Array(prices.length).fill(0);
-    for (let i = prices.length - 2; i >= 0; i--) {
-        maxToRightOfIx[i] = Math.max(prices[i + 1], maxToRightOfIx[i + 1])
-    }
+    // Sliding window: O(n) time and O(1) space
     let maxProfit = 0;
-    prices.forEach((price, ix) => {
-        maxProfit = Math.max(maxProfit, maxToRightOfIx[ix] - price)
-    })
+    let [l, r] = [0, 1]; // left==buy, right==sell
+    while (r < prices.length) {
+        const [buyPrice, sellPrice] = [prices[l], prices[r]]
+        const currentProfit = sellPrice - buyPrice;
+        if (currentProfit < 0) { // sellPrice < buyPrice
+            l = r;
+        } else {
+            maxProfit = Math.max(maxProfit, currentProfit)
+        }
+        r++;
+    }
     return maxProfit;
 };

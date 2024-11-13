@@ -3,6 +3,7 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
+    // O(n) time and O(n) space
     const maxToRightOfIx = new Array(prices.length).fill(0);
     for (let i = prices.length - 2; i >= 0; i--) {
         maxToRightOfIx[i] = Math.max(prices[i + 1], maxToRightOfIx[i + 1])

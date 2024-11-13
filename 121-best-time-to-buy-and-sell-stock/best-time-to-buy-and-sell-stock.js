@@ -3,16 +3,13 @@
  * @return {number}
  */
 var maxProfit = function (prices) {
-    // Optimal approach: Greedy algorithm. O(n) time and O(1) space
-    let maxProfit = 0;
-    let buyPrice = prices[0];
-    for (let i = 1; i < prices.length; i++) {
-        const currentPrice = prices[i];
-        if (currentPrice < buyPrice) {
-            buyPrice = currentPrice;
-        } else {
-            maxProfit = Math.max(maxProfit, (currentPrice - buyPrice));
-        }
+    const maxToRightOfIx = new Array(prices.length).fill(0);
+    for (let i = prices.length - 2; i >= 0; i--) {
+        maxToRightOfIx[i] = Math.max(prices[i + 1], maxToRightOfIx[i + 1])
     }
+    let maxProfit = 0;
+    prices.forEach((price, ix) => {
+        maxProfit = Math.max(maxProfit, maxToRightOfIx[ix] - price)
+    })
     return maxProfit;
 };
